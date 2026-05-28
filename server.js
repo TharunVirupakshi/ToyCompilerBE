@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = Number(process.env.PORT || 3001);
-const COMPILER_BINARY = path.join(__dirname, "a.out");
+const COMPILER_BINARY = path.join(__dirname, "compiler");
 const MAX_BODY_SIZE = 1024 * 1024;
 
 const sendJson = (res, statusCode, payload) => {
@@ -87,6 +87,7 @@ const compileSource = async (sourceCode) => {
       stepsData = JSON.parse(await readFile(stepsPath, "utf8"));
       astData = JSON.parse(await readFile(astPath, "utf8"));
     } catch (error) {
+      console.error("Error reading compiler output files:", error);
       const message =
         error instanceof Error
           ? error.message
